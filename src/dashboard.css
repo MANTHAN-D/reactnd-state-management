@@ -1,0 +1,16 @@
+.main-div {
+  border:1px solid black;
+  margin:10px 10px;
+  height: 300px;
+  display: flex;
+}
+
+.add-user-div {
+  flex: 0 0 25%;
+  border:1px solid black;
+}
+
+.list-user-div {
+ 	color: black;
+  	flex: 1; 
+}
