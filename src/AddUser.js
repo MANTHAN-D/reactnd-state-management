@@ -1,23 +1,35 @@
 import React, {Component} from "react"
 
 class AddUser extends Component {
+  	
   	state = {
-     	userName: null,
-      	firstName: null,
-      	lastName: null,
+     	userName: '',
+      	firstName: '',
+      	lastName: '',
       	gamesPlayed: 0,
       	error: null
     }
 
 	updateState = (event) => {
-      	let property = event.target.id;
       	this.setState({
-        	property: event.target.value
+        	[event.target.id]: event.target.value
+        }, () => {
+			document.getElementById("add-user-button").disabled = !this.allowAddUser();
         })
     }
 
 	allowAddUser = () => {
      return (this.state.userName && this.state.firstName && this.state.lastName) 
+    }
+
+	addUser = () => {
+      alert("Monty");
+      this.props.addUser({
+      		userName: this.state.userName,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            gamesPlayed: 0
+      });
     }
 
 	render() {
@@ -34,7 +46,7 @@ class AddUser extends Component {
              	</div>
              	<div className="error">{this.state.error}</div>
              	<div>
-   	          		<button disabled={this.allowAddUser()}>Add User</button>
+   	          		<button id="add-user-button" disabled onClick={this.addUser}>Add User</button>
       			</div>
              </div>
       	) 

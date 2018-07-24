@@ -17,14 +17,22 @@ class Dashboard extends Component{
         ]
   	}
 
+	addUserCallback = (user) => {
+      this.setState((prevState) => {
+      	return {
+         users: prevState.users.push(user) 
+        }
+      })
+    }
+
   	render() {
     	return(
       		<div>
-            	<h2>Video Game Dashboard</h2>
+            	<span>Video Game Dashboard</span>
              	<div className="main-div">
              		//Add user div
              		<div className="add-user-div">
-             			<AddUser />
+             			<AddUser addUser={this.addUserCallback}/>
              		</div>
              		//List User div
              		<div className="list-user-div">
