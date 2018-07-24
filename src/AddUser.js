@@ -1,55 +1,63 @@
 import React, {Component} from "react"
+import PropTypes from "prop-types"
 
 class AddUser extends Component {
   	
   	state = {
-     	userName: '',
-      	firstName: '',
-      	lastName: '',
-      	gamesPlayed: 0,
+     	user: {
+          	userName: '',
+        	firstName: '',
+          	lastName: '',
+	      	gamesPlayed: 0
+        },
       	error: null
     }
 
-	updateState = (event) => {
-      	this.setState({
-        	[event.target.id]: event.target.value
-        }, () => {
-			document.getElementById("add-user-button").disabled = !this.allowAddUser();
-        })
+	handleInputChange = event => {
+      
+	    const { name, value } = event.target;
+      	this.setState(currState => ({
+        	user: {
+    	      ...currState.user,
+              [name]: value
+        	}
+        }))
     }
 
-	allowAddUser = () => {
-     return (this.state.userName && this.state.firstName && this.state.lastName) 
+	isDisabled = () => {
+     return !(this.state.user.userName && this.state.user.firstName && this.state.user.lastName) 
     }
 
-	addUser = () => {
-      alert("Monty");
-      this.props.addUser({
-      		userName: this.state.userName,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            gamesPlayed: 0
-      });
+	handleSubmit = event => {
+      event.preventDefault();
+      this.props.onAddUser(this.state.user);
     }
 
 	render() {
      	return(
       		<div>
-             	<div>
- 	            	<input type="text" id="userName" placeholder="Username" value={this.state.userName} onChange={this.updateState}/>
-             	</div>
-             	<div>
-					<input type="text" id="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.updateState}/>
-             	</div>
-             	<div>
-             		<input type="text" id="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.updateState}/>
-             	</div>
-             	<div className="error">{this.state.error}</div>
-             	<div>
-   	          		<button id="add-user-button" disabled onClick={this.addUser}>Add User</button>
-      			</div>
+             	<form onSubmit={this.handleSubmit}>
+             		<div>
+ 	            		<input type="text" name="userName" placeholder="Username" value={this.state.user.userName} onChange=					{this.handleInputChange}/>
+             		</div>
+             		<div>
+						<input type="text" name="firstName" placeholder="First Name" value={this.state.user.firstName} onChange={this.handleInputChange}/>
+             		</div>
+             		<div>
+	             		<input type="text" name="lastName" placeholder="Last Name" value={this.state.user.lastName} onChange={this.handleInputChange}/>
+    	         	</div>
+        	     	<div className="error">{this.state.error}</div>
+            	 	<div>
+   	          			<button id="add-user-button" disabled={this.isDisabled()}>Add User</button>
+      				</div>
+				</form>
              </div>
       	) 
     }
 }
+
+AddUser.propTypes = {
+	onAddUser: PropTypes.func.isRequired   
+}
+
 export default AddUser

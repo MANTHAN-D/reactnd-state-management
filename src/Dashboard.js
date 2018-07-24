@@ -18,10 +18,8 @@ class Dashboard extends Component{
   	}
 
 	addUserCallback = (user) => {
-      this.setState((prevState) => {
-      	return {
-         users: prevState.users.push(user) 
-        }
+      this.setState({
+        users: this.state.users.concat(user)
       })
     }
 
@@ -32,7 +30,7 @@ class Dashboard extends Component{
              	<div className="main-div">
              		//Add user div
              		<div className="add-user-div">
-             			<AddUser addUser={this.addUserCallback}/>
+             			<AddUser onAddUser={this.addUserCallback}/>
              		</div>
              		//List User div
              		<div className="list-user-div">
