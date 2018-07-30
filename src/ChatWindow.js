@@ -2,26 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import MessageForm from "./MessageForm"
+import MessageHistory from "./MessageHistory"
 
 const ChatWindow = (props) => {
 	return (
       		<div className="chat-window">
             <h2>Super Awesome Chat</h2>
             <div className="name sender">{props.username}</div>
-
-            <ul className="message-list">
-              {props.messages.map((message, index) => (
-                <li
-                  key={index}
-                  className={
-                    message.username === props.username ? 'message sender' : 'message recipient'
-                  }
-                >
-                  <p>{`${message.username}: ${message.text}`}</p>
-                </li>
-              ))}
-            </ul>
-
+			<MessageHistory username={props.username} messages={props.messages}/>
 			<MessageForm onMessageSent={props.onMessageRecieved} sender={props.username}/>            
           </div>
       	)
