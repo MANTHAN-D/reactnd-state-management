@@ -23,6 +23,13 @@ class Dashboard extends Component{
       })
     }
 
+	isUserNameAvailable = (userName) => {
+      if (this.state.users.filter(user => user.userName === userName).length > 0)
+          return false;
+      else
+          return true;
+    }
+
   	render() {
     	return(
       		<div>
@@ -30,7 +37,7 @@ class Dashboard extends Component{
              	<div className="main-div">
              		//Add user div
              		<div className="add-user-div">
-             			<AddUser onAddUser={this.addUserCallback}/>
+             			<AddUser onAddUser={this.addUserCallback} isUserNameAvailable={this.isUserNameAvailable}/>
              		</div>
              		//List User div
              		<div className="list-user-div">

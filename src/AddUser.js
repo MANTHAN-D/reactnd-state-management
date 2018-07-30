@@ -20,7 +20,8 @@ class AddUser extends Component {
         	user: {
     	      ...currState.user,
               [name]: value
-        	}
+        	},
+          	error: null
         }))
     }
 
@@ -30,7 +31,14 @@ class AddUser extends Component {
 
 	handleSubmit = event => {
       event.preventDefault();
-      this.props.onAddUser(this.state.user);
+      if(this.props.isUserNameAvailable(this.state.user.userName)){
+        this.props.onAddUser(this.state.user);
+      }
+      else{
+      	this.setState({
+          error: "Username already exists! Please use other username"
+        })
+      }
     }
 
 	render() {
@@ -57,7 +65,8 @@ class AddUser extends Component {
 }
 
 AddUser.propTypes = {
-	onAddUser: PropTypes.func.isRequired   
+	onAddUser: PropTypes.func.isRequired,
+  	isUserNameAvailable: PropTypes.func.isRequired
 }
 
 export default AddUser
